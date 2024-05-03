@@ -1,47 +1,43 @@
-clocking cb @(posedge serial_adder_if.clk);
-endclocking
+module serial_adder_tb;
 
-serial_adder_if u_serial_adder (
-    .clk(cb.clk),
-    .rst_n(serial_adder_if.rst_n),
-    .start(serial_adder_if.start),
-    .operand_a(serial_adder_if.operand_a),
-    .operand_b(serial_adder_if.operand_b),
-    .result(serial_adder_if.result)
-);
+    logic clk;
+    logic reset;
+    logic [3:0] serial_in_a;
+    logic [3:0] serial_in_b;
+    logic [3:0] sum_out;
 
-module serial_adder_tb();
+    // Clocking block
+    clocking cb @(posedge clk);
+        default input #1;
+        default output #0;
+    endclocking
 
-    serial_adder_if dut_if();
+    // Modports
+    modport dut_port(input clk, reset, serial_in_a, serial_in_b,
+                     output sum_out);
 
+    // Program block
     initial begin
-        // Initialize inputs
-        dut_if.clk = 0;
-        dut_if.rst_n = 1;
-        dut_if.start = 0;
-        dut_if.operand_a = 4'b0000;
-        dut_if.operand_b = 4'b0000;
+        $dumpfile("serial_adder_tb.vcd");
+        $dumpvars(0, serial_adder_tb);
         
-        // Apply reset
-        #10;
-        dut_if.rst_n = 0;
-        #10;
-        dut_if.rst_n = 1;
+        clk = 0;
+        forever #5 clk = ~clk;
         
-        // Apply inputs and start calculation
-        dut_if.operand_a = 4'b0010;
-        dut_if.operand_b = 4'b0110;
-        dut_if.start = 1;
+        reset = 1;
+        serial_in_a = 4'b0000;
+        serial_in_b = 4'b0000;
         
-        // Wait for calculation to complete
-        #20;
+        #10 reset = 0;
         
-        // Display result
-        $display("Result: %b", dut_if.result);
-        
-        // Finish simulation
-        #10;
+        // Test vectors
+        serial_in_a = 4'b0110;
+        serial_in_b = 4'b1011;
+        #100;
         $finish;
     end
+
+    // Instantiate DUT
+    serial_adder dut_inst(.dut_port);
 
 endmodule

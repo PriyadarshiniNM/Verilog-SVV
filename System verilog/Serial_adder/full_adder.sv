@@ -1,10 +1,7 @@
-module full_adder(
-    input a, b, cin,clk,
-    output sum, cout
-);
+module FullAdder(input logic a, b, cin,
+                 output logic sum, cout);
 
-    always @(clk) begin
-    sum = a ^ b ^ cin;
-    cout = (a & b) | (a & cin) | (b & cin);
-    end
+    assign sum = a ^ b ^ cin;
+    assign cout = (a & b) | (cin & (a ^ b));
+
 endmodule

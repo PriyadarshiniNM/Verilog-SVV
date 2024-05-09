@@ -1,12 +1,15 @@
-//testbench of JK flip flop ( JK_FF_tb.sv )
-module JK_FF_tb ( JK_inter.TB t1);
+// testbench of JK flip flop ( JK_FF_tb.sv )
+program JK_FF_tb ( JK_inter.TB T1);
 initial begin
-	t1.rst <= 1’b1;
-	#10	t1.rst <= 1’b0;
-	#10	t1.J <= 1’b0;	t1.K<= 1’b0;
-	#10	t1.K <= 1’b1;
-	#10	t1.J <= 1’b1; t1.K<= 1’b0;
-	#10	t1.K <= 1’b1;
-	#10	$finish;
+	T1.rst <= 1'b1; //reset high
+    T1.cb.J <= 1'b0;	T1.cb.K <= 1'b0;
+	#10	T1.K <= 1'b1;
+
+	#10	T1.rst <= 1'b0; //reset low
+	#10	T1.cb.J <= 1'b0;	T1.cb.K <= 1'b0;
+	#10	T1.cb.K <= 1'b1;
+	#10	T1.cb.J <= 1'b1; T1.cb.K<= 1'b0;
+	#10	T1.cb.K <= 1'b1;
+	#50	$finish;
 end
-endmodule
+endprogram

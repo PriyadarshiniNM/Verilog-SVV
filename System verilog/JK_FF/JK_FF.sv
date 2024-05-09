@@ -20,20 +20,23 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-//Design Under Test JK flip flop ( JK _FF.sv )
-module JK_FF(JK_inter.RTL r1)
-always@(posedge r1.clk, posedge r1.rst)
+//Design Under Test JK flip flop ( JK _FF.v )
+module JK _FF(input clk, rst, J, K,
+ourtput Q);
+reg [1:0] JK;
+JK ={J,K};
+always@(posedge clk, posedge rst)
 begin
-    if (r1.rst)
-   	 r1.Q <= 1'b0;
+    if (rst)
+   	 Q <= 1'b0;
     else
-    	if {r1.J, r1.K} == 2'b00
-            r1.Q <= r1.Q;
-   	 	else if {r1.J, r1.K} == 2'b01
-            r1.Q <= 1'b0;
-   	 	else if {r1.J, r1.K} == 2'b10
-            r1.Q <= 1'b1;
-   	 	else if {r1.J, r1.K} == 2'b11
-            r1.Q <= ~(r1.Q);
+    	if JK == 2'b00
+            Q <= r1.Q;
+   	 	else if JK == 2'b01
+            Q <= 1'b0;
+   	 	else if JK == 2'b10
+            Q <= 1'b1;
+   	 	else if JK == 2'b11
+            Q <= (~Q);
 end
 endmodule

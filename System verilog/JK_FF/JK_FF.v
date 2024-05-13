@@ -1,15 +1,19 @@
-// testbench of JK flip flop ( JK_FF_tb.sv )
-program JK_FF_tb ( JK_inter.TB T1);
-initial begin
-	T1.rst <= 1'b1; //reset high
-    T1.cb.J <= 1'b0;	T1.cb.K <= 1'b0;
-	#10	T1.K <= 1'b1;
-
-	#20	T1.rst <= 1'b0; //reset low
-	#10	T1.cb.J <= 1'b0;	T1.cb.K <= 1'b0;
-	#10	T1.cb.K <= 1'b1;
-	#10	T1.cb.J <= 1'b1; T1.cb.K<= 1'b0;
-	#10	T1.cb.K <= 1'b1;
-	#50	$finish;
+//JK DUT (JK_FF.v)
+module JK_FF(input clk, rst, J, K,
+output reg Q);
+reg [1:0] JK;
+//JK ={J,K};
+always@(posedge clk or posedge rst)
+begin
+	JK={J,K};
+    if (rst)
+   	 Q <= 1'b0;
+    else
+        begin
+    	if( JK == 2'b00)                 Q <= Q;
+   	else if (JK == 2'b01)            Q <= 1'b0;
+   	else if (JK == 2'b10)            Q <= 1'b1;
+   	else if (JK == 2'b11)            Q <= (~Q);
+        end
 end
-endprogram 
+endmodule

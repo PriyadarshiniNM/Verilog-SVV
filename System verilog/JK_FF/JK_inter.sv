@@ -1,14 +1,15 @@
-//Interface module of JK flip flop ( JK_inter.sv )
-interface JK_inter(input bit clk);
-	logic J, K, rst;
-    logic Q;
+// testbench of JK flip flop ( JK_FF_tb.sv )
+program JK_FF_tb ( JK_inter.TB T1);
+initial begin
+	T1.rst <= 1'b1; //reset high
+    T1.cb.J <= 1'b0;	T1.cb.K <= 1'b0;
+	#10	T1.K <= 1'b1;
 
-    clocking cb@(posedge clk);
-    default input #2ns output #3ns;
-    input Q;
-    output J,K;
-    endclocking
-
-	modport TB ( clocking cb, output rst);
-
-endinterface
+	#20	T1.rst <= 1'b0; //reset low
+	#10	T1.cb.J <= 1'b0;	T1.cb.K <= 1'b0;
+	#10	T1.cb.K <= 1'b1;
+	#10	T1.cb.J <= 1'b1; T1.cb.K<= 1'b0;
+	#10	T1.cb.K <= 1'b1;
+	#50	$finish;
+end
+endprogram

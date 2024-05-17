@@ -4,7 +4,7 @@ interface JK_inter(input bit clk);
     logic Q;
 
     clocking cb@(posedge clk);
-    default input #1ns output #1ns;
+    default input #2ns output #3ns;
     input Q;
     output J,K;
     endclocking

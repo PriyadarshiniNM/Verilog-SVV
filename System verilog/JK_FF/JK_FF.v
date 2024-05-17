@@ -2,7 +2,7 @@
 module JK_FF(input clk, rst, J, K,
 output reg Q);
 reg [1:0] JK;
-//JK ={J,K};
+
 always@(posedge clk or posedge rst)
 begin
 	JK={J,K};

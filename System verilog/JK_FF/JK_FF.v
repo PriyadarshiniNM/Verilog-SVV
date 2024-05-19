@@ -1,19 +1,24 @@
-//JK DUT (JK_FF.v)
-module JK_FF(input clk, rst, J, K,
-output reg Q);
-reg [1:0] JK;
+module JK_FF (input clk, rst, J, K,
+    output reg Q);
 
-always@(posedge clk or posedge rst)
-begin
-	JK={J,K};
-    if (rst)
-   	 Q <= 1'b0;
-    else
-        begin
-    	if( JK == 2'b00)                 Q <= Q;
-   	else if (JK == 2'b01)            Q <= 1'b0;
-   	else if (JK == 2'b10)            Q <= 1'b1;
-   	else if (JK == 2'b11)            Q <= (~Q);
+always @(posedge clk or posedge rst) begin
+    if (rst) begin
+        Q <= 1'b0;
+    end 
+	else begin
+          if (reset) begin
+            Q <= 1'b0;  // Reset Q to 0
+        end 
+		else begin
+            if (J == 1'b0 && K == 1'b0) begin
+                Q <= Q;
+            end else if (J == 1'b0 && K == 1'b1) begin
+                Q <= 1'b0;
+            end else if (J == 1'b1 && K == 1'b0) begin
+                Q <= 1'b1;
+            end else if (J == 1'b1 && K == 1'b1) begin
+                Q <= ~Q;  
         end
-end
+    end
+
 endmodule

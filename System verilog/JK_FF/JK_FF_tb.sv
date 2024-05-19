@@ -8,7 +8,7 @@ initial begin
 	#10	T1.rst <= 1'b0; //reset low
 	#10	T1.cb.J <= 1'b0;	T1.cb.K <= 1'b0;
 	#10	T1.cb.K <= 1'b1;
-	#10	T1.cb.J <= 1'b1; T1.cb.K<= 1'b0;
+	#10	T1.cb.J <= 1'b1;	T1.cb.K<= 1'b0;
 	#10	T1.cb.K <= 1'b1;
 	#50	$finish;
 end

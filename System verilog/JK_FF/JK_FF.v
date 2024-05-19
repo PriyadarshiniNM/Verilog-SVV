@@ -20,5 +20,4 @@ always @(posedge clk or posedge rst) begin
                 Q <= ~Q;  
         end
     end
-
 endmodule

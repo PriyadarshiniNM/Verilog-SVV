@@ -6,18 +6,18 @@ always @(posedge clk or posedge rst) begin
         Q <= 1'b0;
     end 
 	else begin
-          if (reset) begin
-            Q <= 1'b0;  // Reset Q to 0
-        end 
-		else begin
             if (J == 1'b0 && K == 1'b0) begin
                 Q <= Q;
-            end else if (J == 1'b0 && K == 1'b1) begin
+            end 
+	    else if (J == 1'b0 && K == 1'b1) begin
                 Q <= 1'b0;
-            end else if (J == 1'b1 && K == 1'b0) begin
+            end 
+	    else if (J == 1'b1 && K == 1'b0) begin
                 Q <= 1'b1;
-            end else if (J == 1'b1 && K == 1'b1) begin
+            end 
+	    else if (J == 1'b1 && K == 1'b1) begin
                 Q <= ~Q;  
-        end
-    end
+            end
+    	end
+end
 endmodule

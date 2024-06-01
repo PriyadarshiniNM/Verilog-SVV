@@ -1,12 +1,12 @@
 // Interface for DUT inputs and outputs
-interface serial_adder_if(input bit clk);
+interface serial_adder_inter(input bit clk);
 
-    logic a, b, cin;
+    logic [3:0]a, b, 
+    logic reset,cin;
     logic sum, cout;
-    logic rst;
 
     clocking cb @(posedge clk);
-        output a, b, cin, rst;
+        output a, b, cin, reset;
         input sum, cout;
     endclocking
 
